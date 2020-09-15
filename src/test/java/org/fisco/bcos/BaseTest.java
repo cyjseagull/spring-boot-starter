@@ -15,10 +15,23 @@
  */
 package org.fisco.bcos;
 
+import org.fisco.bcos.sdk.BcosSDK;
+import org.fisco.bcos.sdk.client.Client;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-public abstract class BaseTest {}
+public abstract class BaseTest {
+    public Client client;
+
+    public BaseTest() {
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("classpath:applicationContext-sample.xml");
+        BcosSDK sdk = context.getBean(BcosSDK.class);
+        client = sdk.getClient(1);
+    }
+}

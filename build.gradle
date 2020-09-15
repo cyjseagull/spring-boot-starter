@@ -19,15 +19,11 @@ googleJavaFormat {
   options style: 'AOSP'
   source = sourceSets*.allJava
   include '**/*.java'
-  exclude '**/temp/*.java'
-  exclude '**/solidity/*.java'
 }
 
 verifyGoogleJavaFormat {
   source = sourceSets*.allJava
   include '**/*.java'
-  exclude '**/temp/*.java'
-  exclude '**/solidity/*.java'
 }
 
 check.dependsOn.remove(test)
@@ -35,7 +31,6 @@ check.dependsOn.remove(verifyGoogleJavaFormat)
 
 repositories {
     maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    maven { url "https://dl.bintray.com/ethereum/maven/" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     mavenCentral()
 }
@@ -47,13 +42,12 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-  compile 'org.fisco-bcos:web3sdk:2.3.0'
+    compile 'org.fisco-bcos:java-sdk:1.0.0-SNAPSHOT'
+    //compile fileTree(dir:'lib',include:['*.jar'])
+    //compile files('lib/java-sdk-1.0.0-SNAPSHOT.jar')
 }
 
 configurations {
-	all {
-		exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-	}
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
